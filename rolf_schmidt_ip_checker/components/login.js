@@ -1,8 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { setCookie, getCookie, hasCookie, deleteCookie } from 'cookies-next';
+import { PrismaClient } from '@prisma/client'
 
-const Login = () => {
+const Login = ({setLoggedIn, props}) => {
+
+    const [input, setInput] = useState("")
+
+    const ChangeHandler = (event) => {
+        setInput(event.target.value)
+    }
+
+    const CheckValidPassword = () => {
+        props.users.forEach(user => {
+            if (user.password == input) {
+                setCookie("loggedIn", true)
+                setLoggedIn(true)
+            } else {
+                console.log("Fail")
+            }
+        })
+    }
+
     return(
-        <h1>Login Side</h1>
+        <div>
+            <form onSubmit={(event) => {
+                event.preventDefault()
+                CheckValidPassword()
+            }}>
+            <input placeholder='Password' onChange={ChangeHandler} defaultValue={input}/>
+            <button type='submit'>Log Ind</button>
+            </form>
+        </div>
     )
 }
 

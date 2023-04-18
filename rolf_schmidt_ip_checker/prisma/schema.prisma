@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Iplog{
+  id          Int @id @default(autoincrement())
+  address     String
+  state       Boolean
+  createdAt   DateTime @default(now())
+}
+
+model Relaylog {
+  id          Int @id @default(autoincrement())
+  state       Boolean
+  createdAt   DateTime @default(now()) 
+}
+
+model machineip {
+  id          Int @id @default(autoincrement())
+  number      String
+  ip          String
+  lastState   Boolean
+}
+
+model users {
+  id          Int @id @default(autoincrement())
+  password   String
+}

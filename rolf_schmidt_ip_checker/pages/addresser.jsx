@@ -1,30 +1,27 @@
 import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import LoginPage from '../components/login'
-import { useRouter } from 'next/router'
 import { PrismaClient } from '@prisma/client'
 import { setCookie, getCookie, hasCookie, deleteCookie } from 'cookies-next';
 import Header from '@/components/Header';
-import AddressPage from './addresser.jsx'
-
+import IpLog from '@/components/iplog';
 
 export default function Home(props) {
 
-  const router = useRouter(); 
-  const [loggedIn, setLoggedIn] = useState(false)
-
-  useEffect(() => {
-    getCookie("loggedIn") == true ? setLoggedIn(true) : setLoggedIn(false)
-
-  }, [])
+  return (
+    <>
+      <Header />
+      {
+        props?.ipLogs?.map((log) => {
+          console.log(log)
+          return(
+            <IpLog log={log}/>
+          )
+        })
+      }
+    </>
+  )
   
-  if (loggedIn) {
-    router.push("../addresser")
-  } else {
-    return(
-      <LoginPage setLoggedIn={setLoggedIn} props={props}/>
-    )
-  }
 }
 
 export async function getStaticProps() {
