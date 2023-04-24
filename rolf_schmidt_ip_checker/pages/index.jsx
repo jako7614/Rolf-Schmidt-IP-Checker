@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { PrismaClient } from '@prisma/client'
 import { setCookie, getCookie, hasCookie, deleteCookie } from 'cookies-next';
 import Header from '@/components/Header';
-import AddressPage from './addresser.jsx'
+import AddressPage from './relaylogs.jsx'
 
 
 export default function Home(props) {
@@ -14,12 +14,12 @@ export default function Home(props) {
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
-    getCookie("loggedIn") == true ? setLoggedIn(true) : setLoggedIn(false)
+    getCookie("loggedin") == true ? setLoggedIn(true) : setLoggedIn(false)
 
   }, [])
   
   if (loggedIn) {
-    router.push("../addresser")
+    router.push("../iplogs")
   } else {
     return(
       <LoginPage setLoggedIn={setLoggedIn} props={props}/>
